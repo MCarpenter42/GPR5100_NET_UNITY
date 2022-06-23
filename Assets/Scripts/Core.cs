@@ -10,6 +10,7 @@ public class Core : MonoBehaviourPunCallbacks
 {
     #region [ OBJECTS ]
 
+    public static Controls Controls;
     public static ErrorCodes ErrorCodes = new ErrorCodes();
 
     #endregion
@@ -359,7 +360,20 @@ public class Core : MonoBehaviourPunCallbacks
 
     #region [ INPUT HANDLING ]
 
+    public static bool GetInput(ControlInput input)
+    {
+        return Input.GetKey(input.Key);
+    }
 
+    public static bool GetInputDown(ControlInput input)
+    {
+        return Input.GetKeyDown(input.Key);
+    }
+
+    public static bool GetInputUp(ControlInput input)
+    {
+        return Input.GetKeyUp(input.Key);
+    }
 
     #endregion
 
