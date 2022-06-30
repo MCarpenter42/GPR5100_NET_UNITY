@@ -5,10 +5,13 @@ using UnityEngine.UI;
 using UnityEditor;
 using TMPro;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class Core : MonoBehaviourPunCallbacks
 {
     #region [ OBJECTS ]
+
+    IPunPrefabPool mainPrefabPool;
 
     public static Controls Controls;
     public static ErrorCodes ErrorCodes = new ErrorCodes();

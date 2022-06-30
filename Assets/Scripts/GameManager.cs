@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
 using TMPro;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class GameManager : Core
 {
@@ -14,12 +16,12 @@ public class GameManager : Core
     //private VideoSettings vidSettingsInstance;
 
     //public static Player Player;
-
     //public static LevelController LevelController;
 
     //public static UIController UIController;
-
     //public static PauseMenu PauseMenu;
+
+    DefaultPool DefaultPool;
 
     #endregion
 
@@ -31,6 +33,8 @@ public class GameManager : Core
 
     public static float FPS;
     private List<float> frameTimes = new List<float>();
+
+    [SerializeField] List<GameObject> prefabsList = new List<GameObject>();
 
     #endregion
 
@@ -115,6 +119,10 @@ public class GameManager : Core
             Player = FindObjectOfType<Player>();
         }
         UIController = FindObjectOfType<UIController>();*/
+
+        SetupPrefabPool();
+
+        Application.targetFrameRate = 60;
 
         if (firstLoad)
         {
@@ -213,6 +221,25 @@ public class GameManager : Core
     #region [ SCENE HANDLING ]
 
 
+
+    #endregion
+
+    #region [ OBJECT HANDLING ]
+
+    private void SetupPrefabPool()
+    {
+        DefaultPool = PhotonNetwork.PrefabPool as DefaultPool;
+        if (prefabsList.Count > 0)
+        {
+            foreach (GameObject prefab in prefabsList)
+            {
+                if (!DefaultPool.ResourceCache.ContainsKey(prefab.name))
+                {
+                    DefaultPool.ResourceCache.Add(prefab.name, prefab);
+                }
+            }
+        }
+    }
 
     #endregion
 

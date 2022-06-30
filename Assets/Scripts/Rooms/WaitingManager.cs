@@ -49,6 +49,7 @@ public class WaitingManager : Core
         base.OnPlayerEnteredRoom(newPlayer);
         if (PhotonNetwork.CurrentRoom.PlayerCount > 1)
         {
+            message.text = "Entering room...";
             PhotonNetwork.LoadLevel("MainGame");
         }
     }
