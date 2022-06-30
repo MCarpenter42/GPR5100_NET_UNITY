@@ -1,22 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEditor;
+using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
-using TMPro;
 
 public class PlayerController : Core
 {
-
     #region [ PROPERTIES ]
 
-    [SerializeField] TMP_Text nameTag;
-    [SerializeField] GameObject playerCamera;
-    [SerializeField] GameObject head;
+    public GameObject playerCamera;
+    [SerializeField] GameObject headPivot;
+    [SerializeField] List<MeshRenderer> modelComponents = new List<MeshRenderer>();
     [SerializeField] float moveSpeed = 5.0f;
     [SerializeField] float rotSpeed = 2.0f;
 
-    private PhotonView view;
+    [HideInInspector] public PhotonView view;
 
     private Vector3 playerRot = Vector3.zero;
 
@@ -29,7 +30,6 @@ public class PlayerController : Core
     void Awake()
     {
         view = GetComponent<PhotonView>();
-        nameTag.text = view.Owner.NickName;
     }
 
     void Start()
@@ -38,6 +38,13 @@ public class PlayerController : Core
         {
             playerCamera.GetComponent<Camera>().enabled = false;
             playerCamera.GetComponent<AudioListener>().enabled = false;
+        }
+        else
+        {
+            foreach (MeshRenderer rndr in modelComponents)
+            {
+                rndr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            }
         }
         playerRot = transform.eulerAngles;
         Cursor.lockState = CursorLockMode.Locked;
@@ -85,6 +92,6 @@ public class PlayerController : Core
         WrapClamp(playerRot.y, 0.0f, 360.0f);
 
         transform.eulerAngles = new Vector3(0.0f, playerRot.y, 0.0f);
-        head.transform.localEulerAngles = new Vector3(playerRot.x, 0.0f, 0.0f);
+        headPivot.transform.localEulerAngles = new Vector3(playerRot.x, 0.0f, 0.0f);
     }
 }

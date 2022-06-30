@@ -151,7 +151,7 @@ public class RoomManager : Core
 
         return isValid;
     }
-
+    
     private bool CheckValidRoomNameNew(string roomName)
     {
         bool isValid = true;

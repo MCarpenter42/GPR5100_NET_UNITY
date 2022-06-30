@@ -15,8 +15,8 @@ public class GameManager : Core
     private Controls controlsInstance;
     //private VideoSettings vidSettingsInstance;
 
-    //public static Player Player;
-    //public static LevelController LevelController;
+    public static PlayerController ClientPlayer;
+    public static GameplayController GameplayController;
 
     //public static UIController UIController;
     //public static PauseMenu PauseMenu;
@@ -113,12 +113,26 @@ public class GameManager : Core
         /*vidSettingsInstance = gameObject.AddComponent<VideoSettings>();
         VideoSettings = vidSettingsInstance;*/
 
-        /*LevelController = FindObjectOfType<LevelController>();
-        if (LevelController.isGameplayLevel)
+        GameplayController = FindObjectOfType<GameplayController>();
+        if (GameplayController == null)
         {
-            Player = FindObjectOfType<Player>();
+            GameplayController = new GameplayController();
+            GameplayController.isGameplayScene = false;
         }
-        UIController = FindObjectOfType<UIController>();*/
+
+        /*if (GameplayController.isGameplayScene)
+        {
+            foreach (PlayerController plrCtrl in FindObjectsOfType<PlayerController>())
+            {
+                if (plrCtrl.view.IsMine)
+                {
+                    ClientPlayer = plrCtrl;
+                    break;
+                }
+            }
+        }*/
+
+        /*UIController = FindObjectOfType<UIController>();*/
 
         SetupPrefabPool();
 
